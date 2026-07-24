@@ -1,6 +1,10 @@
 package com.ios26.apiproject;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.os.Bundle;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +16,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private ProgressBar progressbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +24,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recView);
+        progressbar = findViewById(R.id.progressbar);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        progressbar.setVisibility(VISIBLE);
         fetchComplexData();
     }
 
@@ -37,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                     
                     ComplexAdapter adapter = new ComplexAdapter(productResponse.getProducts());
                     recyclerView.setAdapter(adapter);
+                    progressbar.setVisibility(GONE);
                 } else {
                     Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                 }
